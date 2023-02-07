@@ -11,6 +11,14 @@
         @else
             <h3 class="mb-3">Nessuna di tipologia</h3>
         @endif
+        @if ($project->technologies)
+                <div class="mb-3">
+                    <h3>technologies:</h3>
+                    @foreach ($project->technologies as $technology)
+                        <span class="badge bg-secondary">{{$technology->name}}</span>
+                    @endforeach
+                </div>
+        @endif
         @if ($project->cover_image)
             <div>
                 <img src="{{asset("storage/$project->cover_image")}}" alt="{{$project->title}}">

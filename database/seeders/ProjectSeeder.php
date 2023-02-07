@@ -20,14 +20,14 @@ class ProjectSeeder extends Seeder
     public function run(Faker $faker)
     {
         //elimina tutti i dati all'interno della tabella
+        Schema::disableForeignKeyConstraints();
         Project::truncate();
+        Schema::enableForeignKeyConstraints();
 
         //inserisce dati finti (5 righe) 
         for($i= 0; $i < 5 ; $i++) { 
-
-            Schema::disableForeignKeyConstraints();
+            
             $type= Type::inRandomOrder()->first();
-            Schema::enableForeignKeyConstraints();
 
             $new_project= new Project;
             $new_project->title = $faker->sentence(3);

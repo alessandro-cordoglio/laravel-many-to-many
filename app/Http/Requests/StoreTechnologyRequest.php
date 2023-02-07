@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProjectRequest extends FormRequest
+class StoreTechnologyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,12 +24,7 @@ class StoreProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'=> 'required|unique:projects|max:100|string',
-            'description'=> 'required|max:2500|string',
-            'client'=> 'required|string',
-            'cover_image' => 'nullable|image|max:2048',
-            'type_id' => 'nullable|exists:types,id',
-            'technologies' => 'nullable|exists:technologies,id',
+            //
         ];
     }
 }

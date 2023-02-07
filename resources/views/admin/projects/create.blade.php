@@ -28,14 +28,30 @@
         <label for="description" class="form-label mt-4">Descrizione Progetto</label>
         <textarea class="form-control" name="description" id="description" style="width: 30rem; height:10rem"> {{old('description')}} </textarea>
 
-        <label for="type" class="form-label">Tipologia</label>
-        <select class="form-control" name="type_id" id="type" style="width:20rem">
-            <option value="">Nessuna tipologia</option>
-            @foreach ($types as $type)
-                <option value="{{$type->id}}" {{old('type_id') == $type->id ? 'selected' : ''}} >{{$type->name}}</option>
-            @endforeach
-        </select>
+        <div class="mt-4">
+            <label for="type" class="form-label">Tipologia</label>
+            <select class="form-control" name="type_id" id="type" style="width:20rem">
+                <option value="">Nessuna tipologia</option>
+                @foreach ($types as $type)
+                    <option value="{{$type->id}}" {{old('type_id') == $type->id ? 'selected' : ''}} >{{$type->name}}</option>
+                @endforeach
+            </select>
+        </div>
 
-        <button type="submit" class="my-5 btn btn-success">Crea</button>
+        <div class="mt-5">
+            <div class="mb-2">
+                Technologies
+            </div>
+            @foreach ($technologies as $technology)
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="{{$technology->slug}}" name="technologies[]" value="{{$technology->id}}" {{in_array( $technology->id, old('technologies', [] ) )? 'checked' : ''}}>
+                    <label class="form-check-label" for="{{$technology->slug}}">{{$technology->name}}</label>
+                </div>
+            @endforeach
+        </div>
+        
+        <div>
+            <button type="submit" class="my-5 btn btn-success">Crea</button>
+        </div>
     </form>
 @endsection

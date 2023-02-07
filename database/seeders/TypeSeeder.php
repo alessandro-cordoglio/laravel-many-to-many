@@ -18,6 +18,10 @@ class TypeSeeder extends Seeder
     public function run()
     {
         
+        Schema::disableForeignKeyConstraints();
+        Type::truncate();
+        Schema::enableForeignKeyConstraints();
+        
         $types=[   
             'Business implementation',
             'Foundational (business improvement)',
