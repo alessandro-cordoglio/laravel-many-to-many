@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Technology;
 use App\Http\Requests\StoreTechnologyRequest;
 use App\Http\Requests\UpdateTechnologyRequest;
+use Illuminate\Support\Str;
 
 class TechnologyController extends Controller
 {
@@ -15,7 +16,9 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        //
+        $technologies=Technology::all();
+
+        return view('admin.technologies.index', compact('technologies'));
     }
 
     /**
@@ -25,7 +28,7 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.technologies.create');
     }
 
     /**
@@ -36,7 +39,14 @@ class TechnologyController extends Controller
      */
     public function store(StoreTechnologyRequest $request)
     {
-        //
+        $data= $request->validated();
+
+        $new_technology= new Technology();
+        $new_technology->fill($data);
+        $new_technology->slug=Str::slug($new_technology->name); 
+        $new_technology->save();
+
+        return redirect()->route('admin.technologies.index');
     }
 
     /**
@@ -45,9 +55,10 @@ class TechnologyController extends Controller
      * @param  \App\Models\Technology  $technology
      * @return \Illuminate\Http\Response
      */
-    public function show(Technology $technology)
+    public function show(string $slug)
     {
-        //
+        $technology= Technology::where('slug', $slug)->first();
+        return view('admin.technologies.show', compact('technology'));
     }
 
     /**
@@ -56,9 +67,10 @@ class TechnologyController extends Controller
      * @param  \App\Models\Technology  $technology
      * @return \Illuminate\Http\Response
      */
-    public function edit(Technology $technology)
+    public function edit(string $slug)
     {
-        //
+        $technology= Technology::where('slug', $slug)->first();
+        return view('admin.technologies.edit', compact('technology'));
     }
 
     /**
@@ -70,7 +82,13 @@ class TechnologyController extends Controller
      */
     public function update(UpdateTechnologyRequest $request, Technology $technology)
     {
-        //
+        $data= $request->validated();
+
+        $technology->slug=Str::slug($data['name']); 
+
+        $technology->update($data);
+
+        return redirect()->route('admin.technologies.index');
     }
 
     /**
@@ -81,6 +99,8 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+
+        return redirect()->route('admin.technologies.index', $technology);
     }
 }
