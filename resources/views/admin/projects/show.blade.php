@@ -11,7 +11,7 @@
         @else
             <h3 class="mb-3">Nessuna di tipologia</h3>
         @endif
-        @if ($project->technologies)
+        @if ($project->technologies->isNotEmpty())
                 <div class="mb-3">
                     <h3>technologies:</h3>
                     @foreach ($project->technologies as $technology)
@@ -24,7 +24,10 @@
                 <img src="{{asset("storage/$project->cover_image")}}" alt="{{$project->title}}">
             </div>
         @endif
-        <p>{{$project->description}}</p>
+        <div>
+            <h3>Descrizione:</h3>
+            <p>{{$project->description}}</p>
+        </div>
     </div>
 
 @endsection
